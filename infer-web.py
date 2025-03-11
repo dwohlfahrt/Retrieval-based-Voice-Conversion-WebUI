@@ -256,6 +256,8 @@ def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
 
 # but2.click(extract_f0,[gpus6,np7,f0method8,if_f0_3,trainset_dir4],[info2])
 def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvpe):
+    print("before extract_f0_feature")
+    print(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvpe)
     gpus = gpus.split("-")
     os.makedirs("%s/logs/%s" % (now_dir, exp_dir), exist_ok=True)
     f = open("%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "w")
@@ -392,6 +394,7 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
     with open("%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
         log = f.read()
     logger.info(log)
+    print("after extract_f0_feature")
     yield log
 
 
@@ -742,6 +745,8 @@ def train1key(
     yield get_info_str(i18n("step1:正在处理数据"))
     [get_info_str(_) for _ in preprocess_dataset(trainset_dir4, exp_dir1, sr2, np7)]
 
+    print("before extract_f0_feature")
+    print(gpus16, np7, f0method8, if_f0_3, exp_dir1, version19, gpus_rmvpe)
     # step2a:提取音高
     yield get_info_str(i18n("step2:正在提取音高&正在提取特征"))
     [
@@ -751,6 +756,7 @@ def train1key(
         )
     ]
 
+    print("after extract_f0_feature")
     # step3a:训练模型
     yield get_info_str(i18n("step3a:正在训练模型"))
     click_train(
